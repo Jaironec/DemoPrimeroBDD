@@ -48,12 +48,12 @@ namespace IU_Libros
         }
         public void VerGrid()
         {
-            using(SistemasEntities ObjGrid=new SistemasEntities())
+            using (SistemasEntities ObjGrid = new SistemasEntities())
             {
                 IQueryable<Libros> qlibros = from q in ObjGrid.Libros select q;
                 List<Libros> lista = qlibros.ToList();
                 dataGridLibros.DataSource = lista;
-                
+
             }
         }
         private void btnEliminar_Click(object sender, EventArgs e)
@@ -72,8 +72,12 @@ namespace IU_Libros
                     context.Libros.Attach(libro2);
                     context.Libros.Remove(libro2);
                     context.SaveChanges();
-                    MessageBox.Show("PERSONA ELIMINADA CON EXITO", "ELIMINO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("LIBRO ELIMINADO CON EXITO", "ELIMINO", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtId.Clear();
+                    txtAutor.Clear();
+                    txtTitulo.Clear();
+                    txtPrecio.Clear();
+                    txtEditorial.Clear();
                     VerGrid();
                 }
                 catch (Exception e1)
@@ -91,7 +95,7 @@ namespace IU_Libros
                 try
                 {
                     int autorID = Convert.ToInt32(txtBusca.Text.ToString());
-                    using (SistemasEntities context=new SistemasEntities())
+                    using (SistemasEntities context = new SistemasEntities())
                     {
                         Libros oLibros = (from q in context.Libros where q.id == autorID select q).First();
                         oLibros.id = Convert.ToInt32(txtId.Text.ToString());
@@ -100,6 +104,7 @@ namespace IU_Libros
                         oLibros.precio = Convert.ToDecimal(txtPrecio.Text.ToString());
                         oLibros.editorial = txtEditorial.Text.ToString();
                         context.SaveChanges();
+                        MessageBox.Show("LIBRO Actualizado CON EXITO");
                         txtId.Clear();
                         txtAutor.Clear();
                         txtTitulo.Clear();
@@ -143,9 +148,10 @@ namespace IU_Libros
             {
                 MessageBox.Show(E.Message.ToString());
             }
-          
-            }
+
         }
     }
- 
+}
+
+
 
